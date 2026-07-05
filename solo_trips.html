@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ivy Liu · solo trips</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            color: #000000;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 30px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            color: #0000ee;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            background: #ffff00;
+            text-decoration: underline;
+        }
+
+        .page-title {
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 8px;
+        }
+
+        .trip-entry {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .trip-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .trip-place {
+            font-weight: 700;
+            font-size: 20px;
+            color: #000;
+            margin-bottom: 2px;
+        }
+
+        .trip-date {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .trip-reflection {
+            color: #333;
+            margin-top: 4px;
+        }
+
+        .trip-reflection .highlight {
+            background: #ffffcc;
+            padding: 0 2px;
+        }
+
+        /* ── Photo styling: no borders, just raw images ── */
+        .trip-photo {
+            margin: 16px 0;
+            display: block;
+        }
+
+        .trip-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: transparent;
+        }
+
+        .trip-photo-left {
+            float: left;
+            margin: 8px 20px 8px 0;
+            max-width: 45%;
+        }
+
+        .trip-photo-left img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .trip-photo-right {
+            float: right;
+            margin: 8px 0 8px 20px;
+            max-width: 45%;
+        }
+
+        .trip-photo-right img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            font-size: 12px;
+            color: #bbb;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 16px;
+                font-size: 14px;
+            }
+            .page-title {
+                font-size: 20px;
+            }
+            .trip-place {
+                font-size: 18px;
+            }
+            .trip-photo-left,
+            .trip-photo-right {
+                float: none;
+                max-width: 100%;
+                margin: 12px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <a class="back-link" href="index.html">← ..</a>
+
+    <div class="page-title">solo_trips / osaka.txt</div>
+
+    <!-- Osaka -->
+    <div class="trip-entry">
+
+        <div class="trip-place">✦ Osaka</div>
+        <div class="trip-date">June 2026</div>
+
+        <!-- Photo 1: Full width -->
+        <div class="trip-photo">
+            <img src="https://i.imgur.com/YOUR-IMAGE-ID-1.jpg" alt="Osaka street" />
+        </div>
+
+        <div class="trip-reflection">
+            I'm a big fan of solo travels. I went to 4 places in a month alone.
+        </div>
+
+        <!-- Photo 2: Left-aligned with text wrapping -->
+        <div class="trip-photo-left">
+            <img src="https://i.imgur.com/YOUR-IMAGE-ID-2.jpg" alt="Osaka friends" />
+        </div>
+
+        <div class="trip-reflection">
+            I met lots of friends there — it taught me <span class="highlight">resilience</span>.
+            Every conversation, every unexpected turn, every quiet moment alone in a 
+            crowded city shaped something new in me.
+        </div>
+
+        <div style="clear: both;"></div>
+
+        <!-- Photo 3: Full width at the end -->
+        <div class="trip-photo">
+            <img src="https://i.imgur.com/Kqne1of.jpeg" alt="red sticks" />
+            <img src="https://i.imgur.com/WaDctMA.jpeg" alt="Bar" />
+            <img src="https://i.imgur.com/UL65IYI.jpeg alt="Bar" />
+        </div>
+
+    </div>
+
+    <div class="footer">
+        thanks for visiting. ✦
+    </div>
+
+</div>
+
+</body>
+</html>
