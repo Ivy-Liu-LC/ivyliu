@@ -84,16 +84,26 @@
             background: #ffffcc;
             padding: 0 2px;
         }
-/* ── Simple Photo ── */
+        /* ── Simple Photo (Smaller) ── */
         .trip-photo {
-            margin: 20px 0;
+            margin: 16px 0;
             display: block;
+            max-width: 80%;  /* Limits width to 80% of container */
+            margin-left: auto;
+            margin-right: auto;  /* Centers the photo */
         }
-
+        
         .trip-photo img {
             width: 100%;
             height: auto;
             display: block;
+        }
+        
+        /* ── Optional: Even smaller on mobile ── */
+        @media (max-width: 640px) {
+            .trip-photo {
+                max-width: 100%;  /* Full width on mobile */
+            }
         }
         /* ── Footer ── */
         .footer {
