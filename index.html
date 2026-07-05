@@ -8,10 +8,10 @@
     :root {
       --bg: #ffffff;
       --text: #111111;
-      --muted: #666666;
-      --link: #111111;
-      --line-height: 1.6;
-      --max-width: 860px;
+      --muted: #6a6a6a;
+      --line: #e7e7e7;
+      --soft: #f7f7f7;
+      --max: 900px;
     }
 
     * {
@@ -26,76 +26,123 @@
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: "SFMono-Regular", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      line-height: 1.7;
       font-size: 16px;
-      line-height: var(--line-height);
-      padding: 40px 20px 80px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
 
     .wrap {
-      max-width: var(--max-width);
+      width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
     }
 
-    .topbar {
-      margin-bottom: 28px;
+    .top {
+      padding: 40px 0 20px;
+      border-bottom: 1px solid var(--line);
     }
 
-    .site-title {
-      font-size: 1.05rem;
+    .name {
       margin: 0 0 8px;
-      font-weight: 500;
+      font-size: 1.05rem;
+      font-weight: 600;
     }
 
-    .site-subtitle {
+    .subtitle {
       margin: 0;
       color: var(--muted);
       font-size: 0.95rem;
     }
 
-    .tree {
-      white-space: pre;
-      overflow-x: auto;
-      font-size: 0.98rem;
-      line-height: 1.75;
-      padding: 0;
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      padding: 18px 0 0;
+      font-size: 0.95rem;
+    }
+
+    .nav a {
+      color: var(--muted);
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 56px 0 28px;
+    }
+
+    .hero h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 7vw, 4rem);
+      line-height: 1.05;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      max-width: 720px;
       margin: 0;
-    }
-
-    .tree a {
-      color: var(--link);
-      text-decoration: none;
-    }
-
-    .tree a:hover {
-      text-decoration: underline;
+      color: var(--muted);
     }
 
     .section {
-      margin-top: 56px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
     }
 
     .section-title {
-      margin: 0 0 16px;
+      margin: 0 0 18px;
       font-size: 1rem;
       font-weight: 600;
     }
 
-    .file-panel {
-      border-top: 1px solid #e5e5e5;
-      padding-top: 18px;
+    .file-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .file-card {
+      display: block;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .file-card:hover {
+      background: var(--soft);
+      border-color: #d8d8d8;
+      text-decoration: none;
     }
 
     .file-name {
-      margin: 0 0 12px;
+      display: block;
+      font-size: 0.98rem;
+      margin-bottom: 6px;
+    }
+
+    .file-meta {
+      display: block;
       color: var(--muted);
       font-size: 0.92rem;
     }
 
-    .file-content {
-      margin: 0;
-      white-space: pre-wrap;
-      word-break: break-word;
+    .content-box {
+      border: 1px solid var(--line);
+      padding: 18px;
+      background: #fff;
+      min-height: 72px;
     }
 
     .muted {
@@ -103,123 +150,120 @@
     }
 
     .footer {
-      margin-top: 72px;
+      padding: 36px 0 60px;
       color: var(--muted);
       font-size: 0.92rem;
+      border-top: 1px solid var(--line);
+      margin-top: 28px;
     }
 
     @media (max-width: 640px) {
       body {
-        padding: 24px 16px 56px;
         font-size: 15px;
       }
 
-      .tree {
-        font-size: 0.92rem;
+      .top {
+        padding-top: 24px;
+      }
+
+      .hero {
+        padding-top: 40px;
+      }
+
+      .file-card,
+      .content-box {
+        padding: 14px;
       }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header class="topbar">
-      <p class="site-title">your-name</p>
-      <p class="site-subtitle">your-short-line</p>
+    <header class="top">
+      <p class="name">your-name</p>
+      <p class="subtitle">your-short-line</p>
+      <nav class="nav">
+        <a href="#about">about</a>
+        <a href="#projects">projects</a>
+        <a href="#experience">experience</a>
+        <a href="#writing">writing</a>
+        <a href="#contact">contact</a>
+      </nav>
     </header>
 
-<pre class="tree">
-your-name
-├── <a href="#folder-01">folder_01</a>
-│   └── <a href="#file-01">file_01.txt</a>
-├── <a href="#folder-02">folder_02</a>
-│   └── <a href="#file-02">file_02.txt</a>
-├── <a href="#folder-03">folder_03</a>
-│   ├── <a href="#file-03">file_03.txt</a>
-│   └── <a href="#file-04">file_04.txt</a>
-├── <a href="#folder-04">folder_04</a>
-│   └── <a href="#file-05">file_05.txt</a>
-├── <a href="#folder-05">folder_05</a>
-│   ├── <a href="#file-06">file_06.txt</a>
-│   ├── <a href="#file-07">file_07.txt</a>
-│   └── <a href="#file-08">file_08.txt</a>
-├── <a href="#folder-06">folder_06</a>
-│   └── <a href="#file-09">file_09.txt</a>
-└── <a href="#folder-07">folder_07</a>
-    └── <a href="#file-10">file_10.txt</a>
-</pre>
+    <section class="hero">
+      <h1>your-main-heading</h1>
+      <p>your-intro-line</p>
+    </section>
 
-    <section class="section" id="folder-01">
-      <h2 class="section-title">folder_01</h2>
-      <div class="file-panel" id="file-01">
-        <p class="file-name">file_01.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
+    <section class="section" id="about">
+      <h2 class="section-title">about</h2>
+      <div class="content-box">
+        [write your about text here]
       </div>
     </section>
 
-    <section class="section" id="folder-02">
-      <h2 class="section-title">folder_02</h2>
-      <div class="file-panel" id="file-02">
-        <p class="file-name">file_02.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
+    <section class="section" id="projects">
+      <h2 class="section-title">projects</h2>
+      <div class="file-list">
+        <a class="file-card" href="#">
+          <span class="file-name">project_01.txt</span>
+          <span class="file-meta">short description</span>
+        </a>
+        <a class="file-card" href="#">
+          <span class="file-name">project_02.txt</span>
+          <span class="file-meta">short description</span>
+        </a>
+        <a class="file-card" href="#">
+          <span class="file-name">project_03.txt</span>
+          <span class="file-meta">short description</span>
+        </a>
       </div>
     </section>
 
-    <section class="section" id="folder-03">
-      <h2 class="section-title">folder_03</h2>
-      <div class="file-panel" id="file-03">
-        <p class="file-name">file_03.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
-      </div>
-      <div class="file-panel" id="file-04" style="margin-top: 24px;">
-        <p class="file-name">file_04.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
-      </div>
-    </section>
-
-    <section class="section" id="folder-04">
-      <h2 class="section-title">folder_04</h2>
-      <div class="file-panel" id="file-05">
-        <p class="file-name">file_05.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
+    <section class="section" id="experience">
+      <h2 class="section-title">experience</h2>
+      <div class="file-list">
+        <div class="file-card">
+          <span class="file-name">role_01.txt</span>
+          <span class="file-meta">organization / date / short note</span>
+        </div>
+        <div class="file-card">
+          <span class="file-name">role_02.txt</span>
+          <span class="file-meta">organization / date / short note</span>
+        </div>
+        <div class="file-card">
+          <span class="file-name">role_03.txt</span>
+          <span class="file-meta">organization / date / short note</span>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="folder-05">
-      <h2 class="section-title">folder_05</h2>
-      <div class="file-panel" id="file-06">
-        <p class="file-name">file_06.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
-      </div>
-      <div class="file-panel" id="file-07" style="margin-top: 24px;">
-        <p class="file-name">file_07.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
-      </div>
-      <div class="file-panel" id="file-08" style="margin-top: 24px;">
-        <p class="file-name">file_08.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
+    <section class="section" id="writing">
+      <h2 class="section-title">writing</h2>
+      <div class="file-list">
+        <a class="file-card" href="#">
+          <span class="file-name">note_01.txt</span>
+          <span class="file-meta">optional subtitle</span>
+        </a>
+        <a class="file-card" href="#">
+          <span class="file-name">note_02.txt</span>
+          <span class="file-meta">optional subtitle</span>
+        </a>
       </div>
     </section>
 
-    <section class="section" id="folder-06">
-      <h2 class="section-title">folder_06</h2>
-      <div class="file-panel" id="file-09">
-        <p class="file-name">file_09.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
-      </div>
-    </section>
-
-    <section class="section" id="folder-07">
-      <h2 class="section-title">folder_07</h2>
-      <div class="file-panel" id="file-10">
-        <p class="file-name">file_10.txt</p>
-        <p class="file-content">[ replace with your own text ]</p>
+    <section class="section" id="contact">
+      <h2 class="section-title">contact</h2>
+      <div class="content-box">
+        your-email@example.com<br />
+        linkedin.com/in/your-linkedin-id
       </div>
     </section>
 
     <footer class="footer">
-    <div class="container">
-      © 2026 Ivy Liu. 
-    </div>
-  </footer>
+      [optional footer text]
+    </footer>
+  </div>
 </body>
 </html>
