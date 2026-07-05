@@ -1,269 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ivy Liu</title>
-  <style>
-    :root {
-      --bg: #ffffff;
-      --text: #111111;
-      --muted: #6a6a6a;
-      --line: #e7e7e7;
-      --soft: #f7f7f7;
-      --max: 900px;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Name | Student Portfolio</title>
+    <style>
+        /* ── Reset & base ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    * {
-      box-sizing: border-box;
-    }
+        body {
+            background: #ffffff;
+            color: #000000;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 30px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-    html {
-      scroll-behavior: smooth;
-    }
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      line-height: 1.7;
-      font-size: 16px;
-    }
+        /* ── Header / title ── */
+        .title {
+            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+        .subtitle {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 12px;
+        }
 
-    a:hover {
-      text-decoration: underline;
-    }
+        /* ── Tree / folder structure ── */
+        .tree {
+            white-space: pre;
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 1.8;
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
 
-    .wrap {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-    }
+        .tree .folder {
+            color: #0000ee;
+            text-decoration: none;
+            font-weight: 500;
+        }
 
-    .top {
-      padding: 40px 0 20px;
-      border-bottom: 1px solid var(--line);
-    }
+        .tree .folder:hover {
+            background: #ffff00;
+            text-decoration: underline;
+            text-decoration-color: #0000ee;
+            text-underline-offset: 2px;
+        }
 
-    .name {
-      margin: 0 0 8px;
-      font-size: 1.05rem;
-      font-weight: 600;
-    }
+        .tree a {
+            color: #008000;
+            text-decoration: none;
+        }
 
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+        .tree a:hover {
+            background: #ffff00;
+            text-decoration: underline;
+            text-decoration-color: #008000;
+            text-underline-offset: 2px;
+        }
 
-    .nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      padding: 18px 0 0;
-      font-size: 0.95rem;
-    }
+        .tree .highlight {
+            background: #ffffcc;
+            padding: 0 2px;
+        }
 
-    .nav a {
-      color: var(--muted);
-    }
+        /* ── Folders (clickable sections) ── */
+        .folder-content {
+            display: none;
+            margin: 16px 0 24px 24px;
+            padding: 16px 20px;
+            border-left: 3px solid #000;
+            background: #f9f9f9;
+            border-radius: 0 8px 8px 0;
+        }
 
-    .nav a:hover {
-      color: var(--text);
-    }
+        .folder-content.open {
+            display: block;
+        }
 
-    .hero {
-      padding: 56px 0 28px;
-    }
+        .folder-content h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
 
-    .hero h1 {
-      margin: 0 0 14px;
-      font-size: clamp(2rem, 7vw, 4rem);
-      line-height: 1.05;
-      font-weight: 600;
-      letter-spacing: -0.04em;
-    }
+        .folder-content p {
+            margin-bottom: 12px;
+        }
 
-    .hero p {
-      max-width: 720px;
-      margin: 0;
-      color: var(--muted);
-    }
+        .folder-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
 
-    .section {
-      padding: 28px 0;
-      border-top: 1px solid var(--line);
-    }
+        .folder-content ul li {
+            padding: 4px 0;
+            border-bottom: 1px dashed #ddd;
+        }
 
-    .section-title {
-      margin: 0 0 18px;
-      font-size: 1rem;
-      font-weight: 600;
-    }
+        .folder-content ul li:last-child {
+            border-bottom: none;
+        }
 
-    .file-list {
-      display: grid;
-      gap: 12px;
-    }
+        /* ── Photo & about layout ── */
+        .about-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: flex-start;
+            margin: 10px 0 6px;
+        }
 
-    .file-card {
-      display: block;
-      padding: 16px 18px;
-      border: 1px solid var(--line);
-      background: #fff;
-      transition: background 0.2s ease, border-color 0.2s ease;
-    }
+        .about-photo {
+            flex: 0 0 160px;
+        }
 
-    .file-card:hover {
-      background: var(--soft);
-      border-color: #d8d8d8;
-      text-decoration: none;
-    }
+        .about-photo img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #000;
+            background: #eee;
+            display: block;
+        }
 
-    .file-name {
-      display: block;
-      font-size: 0.98rem;
-      margin-bottom: 6px;
-    }
+        .about-text {
+            flex: 1;
+            min-width: 200px;
+        }
 
-    .file-meta {
-      display: block;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
+        .about-text p {
+            margin-bottom: 10px;
+        }
 
-    .content-box {
-      border: 1px solid var(--line);
-      padding: 18px;
-      background: #fff;
-      min-height: 72px;
-    }
+        .about-text .label {
+            font-weight: 700;
+            display: inline-block;
+            min-width: 80px;
+        }
 
-    .muted {
-      color: var(--muted);
-    }
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            body {
+                padding: 16px;
+                font-size: 14px;
+            }
 
-    .footer {
-      padding: 36px 0 60px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      border-top: 1px solid var(--line);
-      margin-top: 28px;
-    }
+            .tree {
+                font-size: 14px;
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
 
-    @media (max-width: 640px) {
-      body {
-        font-size: 15px;
-      }
+            .about-grid {
+                flex-direction: column;
+                align-items: center;
+            }
 
-      .top {
-        padding-top: 24px;
-      }
+            .about-photo {
+                flex: 0 0 140px;
+                width: 140px;
+            }
 
-      .hero {
-        padding-top: 40px;
-      }
+            .title {
+                font-size: 22px;
+            }
 
-      .file-card,
-      .content-box {
-        padding: 14px;
-      }
-    }
-  </style>
+            .folder-content {
+                margin-left: 8px;
+                padding: 12px 14px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            body {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            .tree {
+                font-size: 13px;
+            }
+
+            .about-photo {
+                flex: 0 0 120px;
+                width: 120px;
+            }
+        }
+
+        /* ── Back link ── */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: #0000ee;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            background: #ffff00;
+            text-decoration: underline;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            margin-top: 40px;
+            padding-top: 16px;
+            border-top: 2px solid #000;
+            font-size: 14px;
+            color: #444;
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="top">
-      <p class="name">your-name</p>
-      <p class="subtitle">your-short-line</p>
-      <nav class="nav">
-        <a href="#about">about</a>
-        <a href="#projects">projects</a>
-        <a href="#experience">experience</a>
-        <a href="#writing">writing</a>
-        <a href="#contact">contact</a>
-      </nav>
-    </header>
 
-    <section class="hero">
-      <h1>your-main-heading</h1>
-      <p>your-intro-line</p>
-    </section>
+<div class="container" id="app">
 
-    <section class="section" id="about">
-      <h2 class="section-title">about</h2>
-      <div class="content-box">
-        [write your about text here]
-      </div>
-    </section>
+    <!-- ====== HEADER ====== -->
+    <div class="title">Your Name</div>
+    <div class="subtitle">Student · [Your Major] · [University]</div>
 
-    <section class="section" id="projects">
-      <h2 class="section-title">projects</h2>
-      <div class="file-list">
-        <a class="file-card" href="#">
-          <span class="file-name">project_01.txt</span>
-          <span class="file-meta">short description</span>
-        </a>
-        <a class="file-card" href="#">
-          <span class="file-name">project_02.txt</span>
-          <span class="file-meta">short description</span>
-        </a>
-        <a class="file-card" href="#">
-          <span class="file-name">project_03.txt</span>
-          <span class="file-meta">short description</span>
-        </a>
-      </div>
-    </section>
+    <!-- ====== TREE VIEW (main navigation) ====== -->
+    <div class="tree" id="treeView">
+        <span class="highlight">~/portfolio</span>
+        ├── <a class="folder" data-folder="about" href="#">about_me</a>
+        │   └── <a data-folder="about" href="#">intro.txt</a>
+        ├── <a class="folder" data-folder="projects" href="#">projects</a>
+        │   └── <a data-folder="projects" href="#">projects.txt</a>
+        ├── <a class="folder" data-folder="photos" href="#">photos</a>
+        │   └── <a data-folder="photos" href="#">gallery.txt</a>
+        ├── <a class="folder" data-folder="contact" href="#">contact</a>
+        │   └── <a data-folder="contact" href="#">contact.txt</a>
+        └── <span class="highlight">README</span>
+    </div>
 
-    <section class="section" id="experience">
-      <h2 class="section-title">experience</h2>
-      <div class="file-list">
-        <div class="file-card">
-          <span class="file-name">role_01.txt</span>
-          <span class="file-meta">organization / date / short note</span>
+    <!-- ====== FOLDER CONTENT AREAS ====== -->
+
+    <!-- ABOUT -->
+    <div class="folder-content" id="folder-about">
+        <a class="back-link" data-close="about">← ..</a>
+        <h2>📄 about_me / intro.txt</h2>
+
+        <div class="about-grid">
+            <div class="about-photo">
+                <!-- Replace src with your own photo -->
+                <img src="https://via.placeholder.com/300/cccccc/000000?text=Your+Photo" alt="Your photo" />
+            </div>
+            <div class="about-text">
+                <p><strong>👋 Hi, I'm [Your Name]</strong></p>
+                <p>
+                    I'm a <strong>[Year]</strong>-year student at <strong>[University]</strong>
+                    studying <strong>[Your Major]</strong>. I'm passionate about
+                    <strong>[your interests]</strong> and love building things that
+                    make a difference.
+                </p>
+                <p>
+                    <span class="label">📍 Location</span> [City, Country]<br />
+                    <span class="label">🎓 Year</span> [Year, e.g. Final Year]<br />
+                    <span class="label">📚 Major</span> [Your Major]<br />
+                    <span class="label">🧠 Interests</span> [AI, design, music, etc.]
+                </p>
+                <p style="margin-top:12px;">
+                    <em>"[Your favourite quote or short bio line]"</em>
+                </p>
+            </div>
         </div>
-        <div class="file-card">
-          <span class="file-name">role_02.txt</span>
-          <span class="file-meta">organization / date / short note</span>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="folder-content" id="folder-projects">
+        <a class="back-link" data-close="projects">← ..</a>
+        <h2>📁 projects / projects.txt</h2>
+        <ul>
+            <li><strong>Project 1</strong> — Short description of your project. <a href="#">[link]</a></li>
+            <li><strong>Project 2</strong> — Another cool thing you built. <a href="#">[link]</a></li>
+            <li><strong>Project 3</strong> — A group project or research work. <a href="#">[link]</a></li>
+        </ul>
+        <p style="margin-top:12px; color:#555;">
+            More details available on my <a href="#" style="color:#0000ee;">GitHub</a>.
+        </p>
+    </div>
+
+    <!-- PHOTOS / GALLERY -->
+    <div class="folder-content" id="folder-photos">
+        <a class="back-link" data-close="photos">← ..</a>
+        <h2>🖼️ photos / gallery.txt</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:16px; margin-top:8px;">
+            <!-- Replace these with your own images -->
+            <img src="https://via.placeholder.com/120/eeeeee/000000?text=Photo+1" alt="Photo 1" style="border:1px solid #000; border-radius:8px; width:120px; height:120px; object-fit:cover;" />
+            <img src="https://via.placeholder.com/120/eeeeee/000000?text=Photo+2" alt="Photo 2" style="border:1px solid #000; border-radius:8px; width:120px; height:120px; object-fit:cover;" />
+            <img src="https://via.placeholder.com/120/eeeeee/000000?text=Photo+3" alt="Photo 3" style="border:1px solid #000; border-radius:8px; width:120px; height:120px; object-fit:cover;" />
+            <img src="https://via.placeholder.com/120/eeeeee/000000?text=Photo+4" alt="Photo 4" style="border:1px solid #000; border-radius:8px; width:120px; height:120px; object-fit:cover;" />
         </div>
-        <div class="file-card">
-          <span class="file-name">role_03.txt</span>
-          <span class="file-meta">organization / date / short note</span>
-        </div>
-      </div>
-    </section>
+        <p style="margin-top:14px; color:#555;">
+            A few snapshots from my journey 📸
+        </p>
+    </div>
 
-    <section class="section" id="writing">
-      <h2 class="section-title">writing</h2>
-      <div class="file-list">
-        <a class="file-card" href="#">
-          <span class="file-name">note_01.txt</span>
-          <span class="file-meta">optional subtitle</span>
-        </a>
-        <a class="file-card" href="#">
-          <span class="file-name">note_02.txt</span>
-          <span class="file-meta">optional subtitle</span>
-        </a>
-      </div>
-    </section>
+    <!-- CONTACT -->
+    <div class="folder-content" id="folder-contact">
+        <a class="back-link" data-close="contact">← ..</a>
+        <h2>📬 contact / contact.txt</h2>
+        <p><strong>Email</strong> <a href="mailto:you@example.com">you@example.com</a></p>
+        <p><strong>LinkedIn</strong> <a href="#">linkedin.com/in/yourprofile</a></p>
+        <p><strong>GitHub</strong> <a href="#">github.com/yourusername</a></p>
+        <p><strong>Twitter / X</strong> <a href="#">@yourhandle</a></p>
+        <p style="margin-top:12px; color:#555;">
+            Feel free to reach out — I'm always open to chat!
+        </p>
+    </div>
 
-    <section class="section" id="contact">
-      <h2 class="section-title">contact</h2>
-      <div class="content-box">
-        ivyliu.lcc@gmail<br />
-        https://www.linkedin.com/in/ivy-l-276648240/
-      </div>
-    </section>
+    <!-- ====== FOOTER ====== -->
+    <div class="footer">
+        <span style="font-weight:700;">$</span> echo "thanks for visiting ✦"
+    </div>
 
-    <footer class="footer">
-      [optional footer text]
-    </footer>
-  </div>
+</div>
+
+<!-- ====== JAVASCRIPT: folder toggling ====== -->
+<script>
+    (function() {
+        // ── DOM refs ──
+        const treeView = document.getElementById('treeView');
+        const folders = {
+            about: document.getElementById('folder-about'),
+            projects: document.getElementById('folder-projects'),
+            photos: document.getElementById('folder-photos'),
+            contact: document.getElementById('folder-contact'),
+        };
+
+        // ── helper: close all folders ──
+        function closeAll() {
+            Object.values(folders).forEach(el => {
+                if (el) el.classList.remove('open');
+            });
+        }
+
+        // ── helper: open a specific folder ──
+        function openFolder(id) {
+            closeAll();
+            const target = folders[id];
+            if (target) {
+                target.classList.add('open');
+                // scroll to folder content
+                setTimeout(() => {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 80);
+            }
+        }
+
+        // ── click handler for tree links (folder navigation) ──
+        treeView.addEventListener('click', function(e) {
+            const link = e.target.closest('a[data-folder]');
+            if (link) {
+                e.preventDefault();
+                const folderId = link.getAttribute('data-folder');
+                if (folderId && folders[folderId]) {
+                    openFolder(folderId);
+                }
+            }
+        });
+
+        // ── click handler for "back" links inside folder content ──
+        document.querySelectorAll('.back-link[data-close]').forEach(function(backLink) {
+            backLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const folderId = this.getAttribute('data-close');
+                if (folderId && folders[folderId]) {
+                    folders[folderId].classList.remove('open');
+                    // scroll back to top of tree
+                    treeView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ── (optional) open 'about' by default on first visit ──
+        // openFolder('about');
+    })();
+</script>
+
 </body>
 </html>
