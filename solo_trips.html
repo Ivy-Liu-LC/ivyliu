@@ -86,11 +86,9 @@
         }
         /* ── Simple Photo (Smaller) ── */
         .trip-photo {
-            margin: 16px 0;
+            margin: 16px auto;
             display: block;
-            max-width: 80%;  /* Limits width to 80% of container */
-            margin-left: auto;
-            margin-right: auto;  /* Centers the photo */
+            width: 200px;  /* Fixed width in pixels */
         }
         
         .trip-photo img {
@@ -99,10 +97,9 @@
             display: block;
         }
         
-        /* ── Optional: Even smaller on mobile ── */
         @media (max-width: 640px) {
             .trip-photo {
-                max-width: 100%;  /* Full width on mobile */
+                width: 150px;  /* Even smaller on mobile */
             }
         }
         /* ── Footer ── */
