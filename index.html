@@ -3,19 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ivy Liu | Biomedical Engineering</title>
+  <title>your-name</title>
   <style>
     :root {
-      --bg: #f5f7fb;
-      --surface: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --line: #e5e7eb;
-      --accent: #2563eb;
-      --accent-soft: #dbeafe;
-      --max: 1100px;
-      --shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
-      --radius: 20px;
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #666666;
+      --link: #111111;
+      --line-height: 1.6;
+      --max-width: 860px;
     }
 
     * {
@@ -28,453 +24,199 @@
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      font-family: "SFMono-Regular", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 16px;
+      line-height: var(--line-height);
+      padding: 40px 20px 80px;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: min(1100px, calc(100% - 32px));
+    .wrap {
+      max-width: var(--max-width);
       margin: 0 auto;
     }
 
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(245, 247, 251, 0.9);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    .topbar {
+      margin-bottom: 28px;
     }
 
-    .nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 0;
+    .site-title {
+      font-size: 1.05rem;
+      margin: 0 0 8px;
+      font-weight: 500;
     }
 
-    .brand {
-      font-weight: 700;
-      letter-spacing: -0.03em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent);
-    }
-
-    .hero {
-      padding: 88px 0 56px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 0.9fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .hero-main,
-    .hero-side,
-    .section-card,
-    .project-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-main {
-      padding: 42px;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      background: var(--accent-soft);
-      color: var(--accent);
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 18px;
-    }
-
-    h1 {
-      margin: 0 0 16px;
-      font-size: clamp(2.6rem, 6vw, 5rem);
-      line-height: 0.98;
-      letter-spacing: -0.05em;
-    }
-
-    .hero-text {
-      max-width: 62ch;
-      color: var(--muted);
-      font-size: 1.08rem;
-      margin-bottom: 24px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-weight: 600;
-      border: 1px solid var(--line);
-      transition: 0.2s ease;
-    }
-
-    .btn.primary {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    .btn.secondary {
-      background: #fff;
-      color: var(--text);
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .hero-side {
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .stat {
-      padding-bottom: 18px;
-      margin-bottom: 18px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .stat:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 6px;
-    }
-
-    .stat-value {
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-
-    section {
-      padding: 0 0 28px;
-    }
-
-    .section-card {
-      padding: 34px;
-    }
-
-    h2 {
-      margin: 0 0 18px;
-      font-size: 1.75rem;
-      letter-spacing: -0.03em;
-    }
-
-    .section-intro {
-      color: var(--muted);
-      max-width: 70ch;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-      margin-top: 20px;
-    }
-
-    .project-card {
-      padding: 24px;
-    }
-
-    .project-tag {
-      display: inline-block;
-      font-size: 0.82rem;
-      color: var(--accent);
-      background: var(--accent-soft);
-      border-radius: 999px;
-      padding: 6px 10px;
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-
-    .project-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.15rem;
-    }
-
-    .project-card p {
+    .site-subtitle {
       margin: 0;
       color: var(--muted);
-    }
-
-    .timeline {
-      display: grid;
-      gap: 16px;
-      margin-top: 18px;
-    }
-
-    .timeline-item {
-      padding: 20px 22px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: #fcfcfd;
-    }
-
-    .timeline-item h3 {
-      margin: 0 0 6px;
-      font-size: 1.04rem;
-    }
-
-    .timeline-item .meta {
-      color: var(--muted);
-      font-size: 0.94rem;
-      margin-bottom: 10px;
-    }
-
-    .contact-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 20px;
-    }
-
-    footer {
-      padding: 12px 0 48px;
-      color: var(--muted);
-      text-align: center;
       font-size: 0.95rem;
     }
 
-    @media (max-width: 900px) {
-      .hero-grid,
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
+    .tree {
+      white-space: pre;
+      overflow-x: auto;
+      font-size: 0.98rem;
+      line-height: 1.75;
+      padding: 0;
+      margin: 0;
+    }
 
-      .nav-inner {
-        flex-direction: column;
-        gap: 10px;
-      }
+    .tree a {
+      color: var(--link);
+      text-decoration: none;
+    }
 
-      .hero {
-        padding-top: 48px;
-      }
+    .tree a:hover {
+      text-decoration: underline;
+    }
 
-      .hero-main,
-      .hero-side,
-      .section-card,
-      .project-card {
-        padding: 24px;
-      }
+    .section {
+      margin-top: 56px;
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .file-panel {
+      border-top: 1px solid #e5e5e5;
+      padding-top: 18px;
+    }
+
+    .file-name {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .file-content {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .footer {
+      margin-top: 72px;
+      color: var(--muted);
+      font-size: 0.92rem;
     }
 
     @media (max-width: 640px) {
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
+      body {
+        padding: 24px 16px 56px;
+        font-size: 15px;
       }
 
-      h1 {
-        font-size: 2.5rem;
-      }
-
-      .hero-actions,
-      .contact-links {
-        flex-direction: column;
-      }
-
-      .btn {
-        text-align: center;
+      .tree {
+        font-size: 0.92rem;
       }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="container nav-inner">
-      <a href="#" class="brand">Ivy Liu</a>
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
-  </nav>
+  <div class="wrap">
+    <header class="topbar">
+      <p class="site-title">your-name</p>
+      <p class="site-subtitle">your-short-line</p>
+    </header>
 
-  <header class="hero">
-    <div class="container hero-grid">
-      <div class="hero-main">
-        <div class="eyebrow">Biomedical Engineering • Medical AI • Bioinformatics</div>
-        <h1>Building healthcare technology with research, empathy, and impact.</h1>
-        <p class="hero-text">
-          I’m Ivy Liu, a final-year Biomedical Engineering student at City University of Hong Kong.
-          I’m interested in medical AI, healthcare innovation, bioinformatics, and STEM education,
-          with experience across research, mentoring, and interdisciplinary projects.
-        </p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#projects">View Projects</a>
-          <a class="btn secondary" href="mailto:your-email@example.com">Email Me</a>
-          <a class="btn secondary" href="https://www.linkedin.com/in/your-linkedin-id" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </div>
+<pre class="tree">
+your-name
+├── <a href="#folder-01">folder_01</a>
+│   └── <a href="#file-01">file_01.txt</a>
+├── <a href="#folder-02">folder_02</a>
+│   └── <a href="#file-02">file_02.txt</a>
+├── <a href="#folder-03">folder_03</a>
+│   ├── <a href="#file-03">file_03.txt</a>
+│   └── <a href="#file-04">file_04.txt</a>
+├── <a href="#folder-04">folder_04</a>
+│   └── <a href="#file-05">file_05.txt</a>
+├── <a href="#folder-05">folder_05</a>
+│   ├── <a href="#file-06">file_06.txt</a>
+│   ├── <a href="#file-07">file_07.txt</a>
+│   └── <a href="#file-08">file_08.txt</a>
+├── <a href="#folder-06">folder_06</a>
+│   └── <a href="#file-09">file_09.txt</a>
+└── <a href="#folder-07">folder_07</a>
+    └── <a href="#file-10">file_10.txt</a>
+</pre>
 
-      <div class="hero-side">
-        <div class="stat">
-          <div class="stat-label">Currently</div>
-          <div class="stat-value">Final-year BME student at CityU Hong Kong</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Focus Areas</div>
-          <div class="stat-value">Medical AI, bioinformatics, healthcare tech</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Also active in</div>
-          <div class="stat-value">Mentoring, STEM outreach, innovation programs</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <section id="about">
-      <div class="section-card">
-        <h2>About</h2>
-        <p class="section-intro">
-          I enjoy working at the intersection of engineering, healthcare, and social impact.
-          My background includes medical AI research, neural network-related project work,
-          mentoring students in technology programs, and contributing to innovation and outreach initiatives.
-        </p>
+    <section class="section" id="folder-01">
+      <h2 class="section-title">folder_01</h2>
+      <div class="file-panel" id="file-01">
+        <p class="file-name">file_01.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
       </div>
     </section>
 
-    <section id="projects">
-      <div class="section-card">
-        <h2>Selected Work</h2>
-        <p class="section-intro">
-          A snapshot of the academic, research, and mentoring experiences that best represent my interests.
-        </p>
-
-        <div class="projects-grid">
-          <article class="project-card">
-            <div class="project-tag">Healthcare AI</div>
-            <h3>Smart Hospital Neural Network Project</h3>
-            <p>
-              Worked on project ideas related to AI applications in healthcare and smart hospital contexts,
-              with a focus on technical problem-solving and real-world relevance.
-            </p>
-          </article>
-
-          <article class="project-card">
-            <div class="project-tag">Research</div>
-            <h3>Medical AI Research Internship</h3>
-            <p>
-              Contributed to medical AI-related research and explored how computational methods can support healthcare innovation.
-            </p>
-          </article>
-
-          <article class="project-card">
-            <div class="project-tag">STEM Education</div>
-            <h3>Youth Tech Mentoring</h3>
-            <p>
-              Supported younger students through mentorship, technical guidance, and innovation-focused learning activities.
-            </p>
-          </article>
-
-          <article class="project-card">
-            <div class="project-tag">Signal & Data</div>
-            <h3>Bioinformatics and Medical Signal Processing</h3>
-            <p>
-              Built coursework and project foundations in bioinformatics, neural networks, and signal analysis such as ECG and PPG.
-            </p>
-          </article>
-        </div>
+    <section class="section" id="folder-02">
+      <h2 class="section-title">folder_02</h2>
+      <div class="file-panel" id="file-02">
+        <p class="file-name">file_02.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
       </div>
     </section>
 
-    <section id="experience">
-      <div class="section-card">
-        <h2>Experience</h2>
-        <div class="timeline">
-          <div class="timeline-item">
-            <h3>Medical AI Research Intern</h3>
-            <div class="meta">Healthcare technology and applied AI</div>
-            <p>Worked on research-related tasks connected to medical AI and innovation in healthcare settings.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Youth Tech Mentor · Project Melo AI</h3>
-            <div class="meta">Mentorship and STEM learning</div>
-            <p>Guided students through structured learning activities and supported their engagement with technology concepts.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Student Mentor · MIT Hong Kong Innovation Node</h3>
-            <div class="meta">Innovation, pitching, and prototyping</div>
-            <p>Helped facilitate science exhibition activities and supported student communication and prototyping workshops.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Honorary Treasurer · IMechE CityU Student Chapter</h3>
-            <div class="meta">Leadership and student organization work</div>
-            <p>Contributed to chapter operations and student community activities through an organizational leadership role.</p>
-          </div>
-        </div>
+    <section class="section" id="folder-03">
+      <h2 class="section-title">folder_03</h2>
+      <div class="file-panel" id="file-03">
+        <p class="file-name">file_03.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
+      </div>
+      <div class="file-panel" id="file-04" style="margin-top: 24px;">
+        <p class="file-name">file_04.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
       </div>
     </section>
 
-    <section id="contact">
-      <div class="section-card">
-        <h2>Contact</h2>
-        <p class="section-intro">
-          I’m interested in opportunities related to biomedical engineering, medical AI, healthcare technology,
-          research, innovation, and interdisciplinary collaboration.
-        </p>
-
-        <div class="contact-links">
-          <a class="btn primary" href="mailto:ivyliu.lcc@gmail.com">ivyliu.lcc@mgmail.com</a>
-          <a class="btn secondary" href="https://www.linkedin.com/in/ivy-l-276648240/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
-        </div>
+    <section class="section" id="folder-04">
+      <h2 class="section-title">folder_04</h2>
+      <div class="file-panel" id="file-05">
+        <p class="file-name">file_05.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
       </div>
     </section>
-  </main>
 
-  <footer>
+    <section class="section" id="folder-05">
+      <h2 class="section-title">folder_05</h2>
+      <div class="file-panel" id="file-06">
+        <p class="file-name">file_06.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
+      </div>
+      <div class="file-panel" id="file-07" style="margin-top: 24px;">
+        <p class="file-name">file_07.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
+      </div>
+      <div class="file-panel" id="file-08" style="margin-top: 24px;">
+        <p class="file-name">file_08.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
+      </div>
+    </section>
+
+    <section class="section" id="folder-06">
+      <h2 class="section-title">folder_06</h2>
+      <div class="file-panel" id="file-09">
+        <p class="file-name">file_09.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
+      </div>
+    </section>
+
+    <section class="section" id="folder-07">
+      <h2 class="section-title">folder_07</h2>
+      <div class="file-panel" id="file-10">
+        <p class="file-name">file_10.txt</p>
+        <p class="file-content">[ replace with your own text ]</p>
+      </div>
+    </section>
+
+    <footer class="footer">
     <div class="container">
       © 2026 Ivy Liu. 
     </div>
