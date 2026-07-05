@@ -72,7 +72,7 @@
         .trip-date {
             color: #888;
             font-size: 14px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .trip-reflection {
@@ -85,49 +85,32 @@
             padding: 0 2px;
         }
 
-        /* ── Photo styling: no borders, just raw images ── */
-        .trip-photo {
-            margin: 16px 0;
+        /* ── Dreamy Photo: Soft Blur / Fade Edges ── */
+        .dreamy-photo {
+            margin: 20px 0;
             display: block;
+            mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+            transition: mask-image 0.6s ease, -webkit-mask-image 0.6s ease;
         }
 
-        .trip-photo img {
+        .dreamy-photo img {
             width: 100%;
             height: auto;
             display: block;
-            background: transparent;
+            transition: transform 0.5s ease;
         }
 
-        .trip-photo-left {
-            float: left;
-            margin: 8px 20px 8px 0;
-            max-width: 45%;
+        .dreamy-photo:hover {
+            mask-image: radial-gradient(ellipse at center, black 90%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 90%, transparent 100%);
         }
 
-        .trip-photo-left img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .dreamy-photo:hover img {
+            transform: scale(1.01);
         }
 
-        .trip-photo-right {
-            float: right;
-            margin: 8px 0 8px 20px;
-            max-width: 45%;
-        }
-
-        .trip-photo-right img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .clearfix::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
+        /* ── Footer ── */
         .footer {
             margin-top: 40px;
             padding-top: 20px;
@@ -148,11 +131,8 @@
             .trip-place {
                 font-size: 18px;
             }
-            .trip-photo-left,
-            .trip-photo-right {
-                float: none;
-                max-width: 100%;
-                margin: 12px 0;
+            .dreamy-photo {
+                margin: 14px 0;
             }
         }
     </style>
@@ -171,8 +151,8 @@
         <div class="trip-place">✦ Osaka</div>
         <div class="trip-date">June 2026</div>
 
-        <!-- Photo 1: Full width -->
-        <div class="trip-photo">
+        <!-- Photo 1: Dreamy fade -->
+        <div class="dreamy-photo">
             <img src="https://i.imgur.com/YOUR-IMAGE-ID-1.jpg" alt="Osaka street" />
         </div>
 
@@ -180,8 +160,8 @@
             I'm a big fan of solo travels. I went to 4 places in a month alone.
         </div>
 
-        <!-- Photo 2: Left-aligned with text wrapping -->
-        <div class="trip-photo-left">
+        <!-- Photo 2: Dreamy fade -->
+        <div class="dreamy-photo">
             <img src="https://i.imgur.com/YOUR-IMAGE-ID-2.jpg" alt="Osaka friends" />
         </div>
 
@@ -191,13 +171,9 @@
             crowded city shaped something new in me.
         </div>
 
-        <div style="clear: both;"></div>
-
-        <!-- Photo 3: Full width at the end -->
-        <div class="trip-photo">
-            <img src="https://i.imgur.com/Kqne1of.jpeg" alt="red sticks" />
-            <img src="https://i.imgur.com/WaDctMA.jpeg" alt="Bar" />
-            <img src="https://i.imgur.com/UL65IYI.jpeg alt="Bar" />
+        <!-- Photo 3: Dreamy fade -->
+        <div class="dreamy-photo">
+            <img src="https://i.imgur.com/YOUR-IMAGE-ID-3.jpg" alt="Osaka night" />
         </div>
 
     </div>
