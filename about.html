@@ -161,21 +161,34 @@
             "My professional life includes consultancy, mentoring, and IT projects, often at the intersection of healthcare, technology, and innovation.",
             "Occasionally, i practice altruism in communities.", 
             "I was born and bred in Hong Kong, and the city's mix of mountains, sea, and neon has shaped both my curiosity and my work.",
-            "Favourite quote: 'You are the captain of your soul and the master of your fate. Life comes from you, not at you. ✦' ",
+            "Favourite quote: 'You are the captain of your soul and the master of your fate. Life comes from you, not at you. ✦' "
         ];
 
-        var lineElements = [
-            document.getElementById('line1'),
-            document.getElementById('line2'),
-            document.getElementById('line3'),
-            document.getElementById('line4'),
-            document.getElementById('line5')
-        ];
+        // Create all line elements dynamically so we don't have to hardcode IDs
+        var contentDiv = document.getElementById('typewriter-content');
+        
+        // Clear existing content
+        contentDiv.innerHTML = '';
+        
+        // Create elements for each line
+        var lineElements = [];
+        for (var i = 0; i < lines.length; i++) {
+            var element;
+            // Make the last line a quote div, all others paragraphs
+            if (i === lines.length - 1) {
+                element = document.createElement('div');
+                element.className = 'quote';
+            } else {
+                element = document.createElement('p');
+            }
+            element.id = 'line' + (i + 1);
+            contentDiv.appendChild(element);
+            lineElements.push(element);
+        }
 
         var charIndex = 0;
         var lineIndex = 0;
-        var isTyping = false;
-        var typingSpeed = 12; // milliseconds per character (fast!)
+        var typingSpeed = 12; // milliseconds per character
 
         // ── Type one character at a time ──
         function typeNextChar() {
