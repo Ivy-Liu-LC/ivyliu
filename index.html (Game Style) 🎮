@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ivy Liu · game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ── LOADING SCREEN ── */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ff41;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 0 20px #00ff4166;
+            margin-bottom: 30px;
+            letter-spacing: 4px;
+        }
+
+        .loading-title .blink {
+            animation: blink 0.8s step-end infinite;
+        }
+
+        .loading-bar-container {
+            width: 300px;
+            height: 6px;
+            background: #00ff4122;
+            border: 1px solid #00ff4144;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .loading-bar {
+            width: 0%;
+            height: 100%;
+            background: #00ff41;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 20px #00ff4166;
+        }
+
+        .loading-text {
+            font-size: 13px;
+            color: #00ff4188;
+            letter-spacing: 2px;
+        }
+
+        .loading-text .percentage {
+            color: #00ff41;
+            font-weight: 700;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ── MAIN CONTENT (initially hidden) ── */
+        body {
+            background: #0a0a0a;
+            color: #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 30px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #0d0d0d;
+            padding: 40px 35px;
+            border-radius: 12px;
+            border: 1px solid #00ff4122;
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.05);
+        }
+
+        /* ── Glitchy title ── */
+        .title {
+            font-weight: 700;
+            font-size: 32px;
+            color: #00ff41;
+            text-shadow: 0 0 10px #00ff4166, 0 0 20px #00ff4133;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #00ff4199;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #00ff4122;
+            padding-bottom: 12px;
+        }
+
+        /* ── Status bar ── */
+        .status-bar {
+            color: #00ff4188;
+            font-size: 13px;
+            margin-bottom: 20px;
+            padding: 8px 12px;
+            background: #00ff4108;
+            border-left: 2px solid #00ff4144;
+            border-radius: 4px;
+        }
+
+        .status-bar .blink {
+            animation: blink 1.2s step-end infinite;
+        }
+
+        /* ── Tree / folder structure ── */
+        .tree {
+            white-space: pre;
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 2;
+            overflow-x: auto;
+            margin: 16px 0 24px;
+            padding: 16px 20px;
+            background: #00ff4108;
+            border-radius: 8px;
+            border: 1px solid #00ff4118;
+        }
+
+        .tree .folder {
+            color: #00ccff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .tree .folder:hover {
+            color: #00ff41;
+            text-shadow: 0 0 12px #00ff4166;
+            background: none;
+            text-decoration: none;
+        }
+
+        .tree .folder::before {
+            content: "▶ ";
+            color: #00ff4166;
+            font-size: 12px;
+        }
+
+        .tree .folder:hover::before {
+            color: #00ff41;
+        }
+
+        .tree a {
+            color: #00ff41;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .tree a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 16px #00ff41aa;
+            background: none;
+            text-decoration: none;
+        }
+
+        .tree .highlight {
+            color: #00ff41;
+            background: none;
+            padding: 0 2px;
+        }
+
+        .tree .dim {
+            color: #00ff4144;
+        }
+
+        /* ── Typing cursor effect ── */
+        .typing-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: #00ff41;
+            animation: blink 0.9s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            margin-top: 30px;
+            padding-top: 16px;
+            font-size: 12px;
+            color: #00ff4155;
+            text-align: center;
+            border-top: 1px solid #00ff4118;
+            letter-spacing: 2px;
+        }
+
+        .footer .heart {
+            color: #ff4466;
+            display: inline-block;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* ── Scanline effect ── */
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 65, 0.015) 2px,
+                rgba(0, 255, 65, 0.015) 4px
+            );
+            z-index: 9999;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+                font-size: 14px;
+            }
+            .container {
+                padding: 24px 18px;
+            }
+            .tree {
+                font-size: 14px;
+                white-space: pre-wrap;
+                word-break: break-word;
+                padding: 12px 14px;
+            }
+            .title {
+                font-size: 24px;
+            }
+            .status-bar {
+                font-size: 12px;
+            }
+            .loading-title {
+                font-size: 20px;
+            }
+            .loading-bar-container {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            body {
+                padding: 8px;
+                font-size: 13px;
+            }
+            .tree {
+                font-size: 13px;
+            }
+            .title {
+                font-size: 20px;
+            }
+            .loading-title {
+                font-size: 18px;
+            }
+            .loading-bar-container {
+                width: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- LOADING SCREEN                          -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div id="loading-screen">
+        <div class="loading-title">
+            <span class="blink">⏣</span> BOOTING IVY.LIU <span class="blink">⏣</span>
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loading-bar"></div>
+        </div>
+        <div class="loading-text">
+            loading <span class="percentage" id="loading-percentage">0</span>%
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SCANLINE OVERLAY                        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="scanline"></div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- MAIN CONTENT                            -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="container" id="main-content">
+
+        <!-- HEADER -->
+        <div class="title">╰┈➤ IVY.LIU</div>
+        <div class="subtitle">✦ interactive portfolio v.1.0</div>
+
+        <!-- STATUS BAR -->
+        <div class="status-bar">
+            <span class="blink">⏣</span> SYSTEM: ONLINE &nbsp;·&nbsp; USER: ivy &nbsp;·&nbsp; LOCATION: ~/ivy's_little_world
+            <span style="float: right; color: #00ff4166;">[READY]</span>
+        </div>
+
+        <!-- TREE VIEW -->
+        <div class="tree" id="treeView">
+            <span class="highlight">┌── ivy's_little_world</span>
+            <span class="dim">│</span>
+            ├── <a class="folder" href="about.html">about_me</a>
+            <span class="dim">│   └──</span> <a href="about.html">intro.txt</a>
+            <span class="dim">│</span>
+            ├── <a class="folder" href="photos.html">photos</a>
+            <span class="dim">│   └──</span> <a href="photos.html">gallery.txt</a>
+            <span class="dim">│</span>
+            ├── <a class="folder" href="monthly_suggestions.html">monthly_suggestions</a>
+            <span class="dim">│   └──</span> <a href="monthly_suggestions.html">book.txt</a>
+            <span class="dim">│</span>
+            ├── <a class="folder" href="solo_trips.html">solo_trips</a>
+            <span class="dim">│   └──</span> <a href="solo_trips.html">osaka.txt</a>
+            <span class="dim">│</span>
+            └── <a class="folder" href="contact.html">contact</a>
+            <span class="dim">    └──</span> <a href="contact.html">contact.txt</a>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <span class="heart">♥</span> thanks for visiting. ✦ <span class="typing-cursor"></span>
+        </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- JAVASCRIPT                              -->
+    <!-- ═══════════════════════════════════════════ -->
+    <script>
+        (function() {
+
+            // ─── 1. LOADING SCREEN ──────────────────────────────
+            var loadingScreen = document.getElementById('loading-screen');
+            var loadingBar = document.getElementById('loading-bar');
+            var loadingPercent = document.getElementById('loading-percentage');
+            var mainContent = document.getElementById('main-content');
+            var body = document.body;
+            var progress = 0;
+            var interval = 30; // ms per step
+            var step = 1;
+
+            function updateLoading() {
+                progress += step;
+                if (progress > 100) {
+                    progress = 100;
+                }
+                loadingBar.style.width = progress + '%';
+                loadingPercent.textContent = progress;
+
+                if (progress < 100) {
+                    setTimeout(updateLoading, interval);
+                } else {
+                    // Loading complete
+                    setTimeout(function() {
+                        loadingScreen.classList.add('hidden');
+                        body.classList.add('loaded');
+                        // Console welcome
+                        console.log('%c╰┈➤ IVY.LIU', 'font-size:20px; font-weight:bold; color:#00ff41;');
+                        console.log('%c✦ interactive portfolio v.1.0', 'font-size:12px; color:#00ff4188;');
+                        console.log('%c▶ click a folder to explore', 'font-size:12px; color:#00ff4166;');
+                    }, 400);
+                }
+            }
+
+            // Start loading
+            setTimeout(updateLoading, 400);
+
+            // ─── 2. CLICK SOUND EFFECT ──────────────────────────
+
+            // Create audio context (only works after user interaction)
+            var audioCtx = null;
+
+            function playClickSound() {
+                try {
+                    if (!audioCtx) {
+                        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    // Create oscillator for a retro "click" sound
+                    var oscillator = audioCtx.createOscillator();
+                    var gainNode = audioCtx.createGain();
+
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+
+                    oscillator.frequency.value = 800;
+                    oscillator.type = 'square';
+
+                    gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+                    oscillator.start(audioCtx.currentTime);
+                    oscillator.stop(audioCtx.currentTime + 0.08);
+                } catch (e) {
+                    // Silently fail if audio not supported
+                }
+            }
+
+            // ─── 3. ATTACH SOUND TO ALL LINKS ────────────────────
+
+            var allLinks = document.querySelectorAll('a');
+            for (var i = 0; i < allLinks.length; i++) {
+                allLinks[i].addEventListener('click', function(e) {
+                    playClickSound();
+                    // Small delay to allow sound to play before navigation
+                    e.preventDefault();
+                    var href = this.getAttribute('href');
+                    if (href && href !== '#') {
+                        setTimeout(function() {
+                            window.location.href = href;
+                        }, 120);
+                    }
+                });
+            }
+
+            // ─── 4. KEYBOARD SHORTCUT: press 1-5 to navigate ────
+
+            var folderLinks = document.querySelectorAll('.folder');
+            document.addEventListener('keydown', function(e) {
+                var key = parseInt(e.key);
+                if (key >= 1 && key <= 5 && folderLinks[key - 1]) {
+                    playClickSound();
+                    e.preventDefault();
+                    var href = folderLinks[key - 1].getAttribute('href');
+                    if (href) {
+                        setTimeout(function() {
+                            window.location.href = href;
+                        }, 120);
+                    }
+                }
+            });
+
+            // ─── 5. KEYBOARD SHORTCUT: press 'h' for help ────────
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'h' || e.key === 'H') {
+                    e.preventDefault();
+                    alert(
+                        '╰┈➤ IVY.LIU\n\n' +
+                        '▶ Click any folder to explore\n' +
+                        '▶ Press 1-5 to navigate quickly\n' +
+                        '▶ Press H for this help message\n' +
+                        '▶ Press ESC to close this\n\n' +
+                        '✦ thanks for visiting!'
+                    );
+                }
+                if (e.key === 'Escape') {
+                    // Close any open alerts by just letting it close naturally
+                }
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
