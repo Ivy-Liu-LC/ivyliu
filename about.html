@@ -44,21 +44,27 @@
 
         .page-title {
             font-weight: 700;
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 20px;
             border-bottom: 2px solid #000;
             padding-bottom: 8px;
         }
 
-        p {
-            margin-bottom: 16px;
+        /* ── Content: smaller font ── */
+        .content {
+            font-size: 14px;
+            line-height: 1.9;
         }
 
-        /* ── Simple Photo (Medium, Centered) ── */
+        .content p {
+            margin-bottom: 14px;
+        }
+
+        /* ── Photo: smaller ── */
         .photo {
-            margin: 16px auto;
+            margin: 12px auto 18px;
             display: block;
-            max-width: 45%;
+            max-width: 35%;
         }
 
         .photo img {
@@ -68,11 +74,12 @@
         }
 
         .quote {
-            margin-top: 20px;
-            padding-top: 16px;
+            margin-top: 18px;
+            padding-top: 14px;
             border-top: 1px solid #eee;
             font-style: italic;
             color: #555;
+            font-size: 13px;
         }
 
         .footer {
@@ -84,17 +91,35 @@
             border-top: 1px solid #eee;
         }
 
+        /* ── Typewriter cursor blink ── */
+        .cursor-blink {
+            display: inline-block;
+            width: 2px;
+            height: 14px;
+            background: #000;
+            animation: blink 0.7s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 1px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
         @media (max-width: 640px) {
             body {
                 padding: 16px;
                 font-size: 14px;
             }
             .photo {
-                width: 120px;
-                height: 120px;
+                max-width: 55%;
             }
             .page-title {
                 font-size: 20px;
+            }
+            .content {
+                font-size: 13px;
             }
         }
     </style>
@@ -111,27 +136,13 @@
         <img src="https://i.imgur.com/jcz5GNA.jpeg" alt="Portrait of Ivy Liu" />
     </div>
 
-    <p>
-        Hello. I am a Biomedical Engineering student at City University of Hong Kong. 
-    </p>
-    
-    <p>
-        Beyond my academic work, I have equal fascination towards photography, art, 
-        philosophy, technology, music, and film. I also love running, playing badminton, and surfing. If it's not too hot, i go hiking too! 
-    </p>
-
-    <p>
-        My professional life includes consultancy, mentoring, and IT projects, 
-    </p>
-
-    <p>
-        I was born and bred in Hong Kong, and the city's mix 
-        of mountains, sea, and neon has shaped both my curiosity and my work.
-    </p>
-
-    <div class="quote">
-        Recent favourite quote: "Most people are other people. Their thoughts are someone else's opinions, 
-        their lives a mimicry, their passions a quotation."
+    <!-- ── TYPEWRITER CONTENT ── -->
+    <div class="content" id="typewriter-content">
+        <p id="line1"></p>
+        <p id="line2"></p>
+        <p id="line3"></p>
+        <p id="line4"></p>
+        <div class="quote" id="line5"></div>
     </div>
 
     <div class="footer">
@@ -139,6 +150,81 @@
     </div>
 
 </div>
+
+<script>
+    (function() {
+
+        // ── The text to type out ──
+        var lines = [
+            "Hello. I am a Biomedical Engineering student at City University of Hong Kong.",
+            "Beyond my academic work, I have equal fascination towards photography, art, philosophy, technology, music, and film. ",
+            "My professional life includes consultancy, mentoring, and IT projects.",
+            "I was born and bred in Hong Kong, and the city's mix of mountains, sea, and neon has shaped both my curiosity and my work.",
+            'Recent favourite quote: "Most people are other people. Their thoughts are someone else\'s opinions, their lives a mimicry, their passions a quotation."'
+        ];
+
+        var lineElements = [
+            document.getElementById('line1'),
+            document.getElementById('line2'),
+            document.getElementById('line3'),
+            document.getElementById('line4'),
+            document.getElementById('line5')
+        ];
+
+        var charIndex = 0;
+        var lineIndex = 0;
+        var isTyping = false;
+        var typingSpeed = 12; // milliseconds per character (fast!)
+
+        // ── Type one character at a time ──
+        function typeNextChar() {
+            if (lineIndex >= lines.length) {
+                // All lines done — remove cursor
+                var cursor = document.querySelector('.cursor-blink');
+                if (cursor) cursor.remove();
+                return;
+            }
+
+            var currentLine = lines[lineIndex];
+            var currentElement = lineElements[lineIndex];
+
+            if (charIndex < currentLine.length) {
+                // Add next character
+                currentElement.textContent += currentLine.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeNextChar, typingSpeed);
+            } else {
+                // Line complete — add cursor blink then move to next line
+                charIndex = 0;
+                lineIndex++;
+                // Add blinking cursor at the end of the line
+                if (lineIndex < lines.length) {
+                    var cursor = document.createElement('span');
+                    cursor.className = 'cursor-blink';
+                    currentElement.appendChild(cursor);
+                    // Remove cursor after a moment
+                    setTimeout(function() {
+                        if (cursor.parentNode) {
+                            cursor.remove();
+                        }
+                    }, 400);
+                }
+                // Small pause between lines
+                setTimeout(typeNextChar, 150);
+            }
+        }
+
+        // ── Start typing after a short delay ──
+        setTimeout(typeNextChar, 400);
+
+        // ── Ensure cursor is removed if user navigates away ──
+        window.addEventListener('beforeunload', function() {
+            var cursors = document.querySelectorAll('.cursor-blink');
+            cursors.forEach(function(c) { c.remove(); });
+        });
+
+    })();
+</script>
 
 </body>
 </html>
